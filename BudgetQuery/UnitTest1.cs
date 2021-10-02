@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BudgetQuery
 {
@@ -56,8 +57,11 @@ namespace BudgetQuery
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
+        public void Invalid_Period()
         {
+            var budgetService = new BudgetService();
+            var actual = budgetService.Query(new DateTime(2021,1,2),new DateTime(2021,1,1));
+            Assert.AreEqual(0, actual);
         }
     }
 }
