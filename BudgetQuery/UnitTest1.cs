@@ -109,6 +109,17 @@ namespace BudgetQuery
             Assert.AreEqual(20, actual);
         }
 
+        [Test]
+        public void QueryTwoMonth()
+        {
+            GivenReport(new Budget { YearMonth = "202103", Amount = 310 }
+                , new Budget { YearMonth = "202104", Amount = 300 }
+                );
+            var actual = _budgetService.Query(new DateTime(2021, 3, 1), new DateTime(2021, 4, 30));
+            Assert.AreEqual(610, actual);
+        }
+
+
         private void GivenReport(params Budget[] budgets)
         {
             _subBudgets.GetAll().Returns(new List<Budget>(budgets));

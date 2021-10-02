@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,14 +28,23 @@ namespace BudgetQuery
                 if (budgets != null)
                 {
                     var amount = budgets.FirstOrDefault(t => t.YearMonth == startMonth)?.Amount ?? 0;
-                    var days = end.Day - start.Day +1;
+                    var days = end.Day - start.Day + 1;
                     return (amount / daysInMonth) * days;
                 }
             }
-            
 
             if (budgets.Any())
             {
+                var startDate = start.ToString("yyyyMM");
+                var endDate = end.ToString("yyyyMM");
+
+                var budgetList = budgets.Where(x =>
+                {
+                    return string.Compare(startDate, x.YearMonth, StringComparison.Ordinal) <= 0
+                           && string.Compare(endDate, x.YearMonth, StringComparison.Ordinal) >= 0;
+                }).ToList();
+
+                return budgetList.Sum(x => x.Amount);
                 return budgets.FirstOrDefault(t => t.YearMonth == startMonth)?.Amount ?? 0;
             }
 
