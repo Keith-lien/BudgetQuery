@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
+using System;
 
 namespace BudgetQuery
 {
@@ -53,18 +53,18 @@ namespace BudgetQuery
 
     #endregion MyRegion
 
-    [TestClass]
+    [TestFixture]
     public class UnitTest1
     {
-        [TestMethod]
+        [Test]
         public void Invalid_Period()
         {
             var budgetService = new BudgetService();
-            var actual = budgetService.Query(new DateTime(2021,1,2),new DateTime(2021,1,1));
+            var actual = budgetService.Query(new DateTime(2021, 1, 2), new DateTime(2021, 1, 1));
             Assert.AreEqual(0, actual);
         }
 
-        [TestMethod]
+        [Test]
         public void Database_NoData()
         {
             var budgetService = new BudgetService();
