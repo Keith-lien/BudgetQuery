@@ -76,10 +76,6 @@ namespace BudgetQuery
             Assert.AreEqual(0, actual);
         }
 
-        private void GivenReport()
-        {
-            _subBudgets.GetAll().Returns(new List<Budget>());
-        }
 
         [Test]
         public void Database_NoBudget()
@@ -87,6 +83,27 @@ namespace BudgetQuery
             GivenReport();
             var actual = _budgetService.Query(new DateTime(2021, 3, 1), new DateTime(2021, 3, 31));
             Assert.AreEqual(0, actual);
+        }        
+        
+        [Test]
+        public void OneBudgetAmountIsZero()
+        {
+            GivenReport(new Budget{YearMonth = "202101",Amount = 0});
+            var actual = _budgetService.Query(new DateTime(2021, 3, 1), new DateTime(2021, 3, 31));
+            Assert.AreEqual(0, actual);
+        }       
+        
+        [Test]
+        public void QueryOneMonth()
+        {
+            GivenReport(new Budget{YearMonth = "202101",Amount = 310});
+            var actual = _budgetService.Query(new DateTime(2021, 1, 1), new DateTime(2021, 1, 31));
+            Assert.AreEqual(310, actual);
+        }
+
+        private void GivenReport(params Budget[] budgets)
+        {
+            _subBudgets.GetAll().Returns(new List<Budget>(budgets));
         }
     }
 }

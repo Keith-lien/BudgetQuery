@@ -15,12 +15,13 @@ namespace BudgetQuery
         }
         public double Query(DateTime start, DateTime end)
         {
-            
             var budgets = _repo.GetAll();
-            if (false == budgets.Any())
+
+            if (budgets.Any())
             {
-                return 0;
+                return budgets.First().Amount;
             }
+                
             return 0;
         }
     }
