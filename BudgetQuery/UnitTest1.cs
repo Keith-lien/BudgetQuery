@@ -56,19 +56,26 @@ namespace BudgetQuery
     [TestFixture]
     public class UnitTest1
     {
+        private BudgetService _budgetService;
+
+        [SetUp]
+        public void Init()
+        {
+            _budgetService = new BudgetService();
+        }
+
         [Test]
         public void Invalid_Period()
         {
-            var budgetService = new BudgetService();
-            var actual = budgetService.Query(new DateTime(2021, 1, 2), new DateTime(2021, 1, 1));
+            
+            var actual = _budgetService.Query(new DateTime(2021, 1, 2), new DateTime(2021, 1, 1));
             Assert.AreEqual(0, actual);
         }
 
         [Test]
         public void Database_NoData()
         {
-            var budgetService = new BudgetService();
-            var actual = budgetService.Query(new DateTime(2021, 3, 1), new DateTime(2021, 3, 31));
+            var actual = _budgetService.Query(new DateTime(2021, 3, 1), new DateTime(2021, 3, 31));
             Assert.AreEqual(0, actual);
         }
     }
