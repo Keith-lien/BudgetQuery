@@ -1,5 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Collections.Generic;
+using NSubstitute;
 
 namespace BudgetQuery
 {
@@ -57,23 +59,32 @@ namespace BudgetQuery
     public class UnitTest1
     {
         private BudgetService _budgetService;
+        private IBudgetRepo _subBudgets;
 
         [SetUp]
         public void Init()
         {
-            _budgetService = new BudgetService(new BudgetRepo());
+            _subBudgets = Substitute.For<IBudgetRepo>();
+            _budgetService = new BudgetService(_subBudgets);
         }
 
         [Test]
         public void Invalid_Period()
         {
+            GivenReport();
             var actual = _budgetService.Query(new DateTime(2021, 1, 2), new DateTime(2021, 1, 1));
             Assert.AreEqual(0, actual);
         }
 
-        [Test]
-        public void Database_NoData()
+        private void GivenReport()
         {
+            _subBudgets.GetAll().Returns(new List<Budget>());
+        }
+
+        [Test]
+        public void Database_NoBudget()
+        {
+            GivenReport();
             var actual = _budgetService.Query(new DateTime(2021, 3, 1), new DateTime(2021, 3, 31));
             Assert.AreEqual(0, actual);
         }
