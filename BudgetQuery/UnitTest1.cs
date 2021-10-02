@@ -71,7 +71,7 @@ namespace BudgetQuery
         [Test]
         public void Invalid_Period()
         {
-            GivenReport();
+            GivenReport(new Budget { YearMonth = "202101", Amount = 310 });
             var actual = _budgetService.Query(new DateTime(2021, 1, 2), new DateTime(2021, 1, 1));
             Assert.AreEqual(0, actual);
         }
@@ -83,20 +83,20 @@ namespace BudgetQuery
             GivenReport();
             var actual = _budgetService.Query(new DateTime(2021, 3, 1), new DateTime(2021, 3, 31));
             Assert.AreEqual(0, actual);
-        }        
-        
+        }
+
         [Test]
         public void OneBudgetAmountIsZero()
         {
-            GivenReport(new Budget{YearMonth = "202101",Amount = 0});
+            GivenReport(new Budget { YearMonth = "202101", Amount = 310 });
             var actual = _budgetService.Query(new DateTime(2021, 3, 1), new DateTime(2021, 3, 31));
             Assert.AreEqual(0, actual);
-        }       
-        
+        }
+
         [Test]
         public void QueryOneMonth()
         {
-            GivenReport(new Budget{YearMonth = "202101",Amount = 310});
+            GivenReport(new Budget { YearMonth = "202101", Amount = 310 });
             var actual = _budgetService.Query(new DateTime(2021, 1, 1), new DateTime(2021, 1, 31));
             Assert.AreEqual(310, actual);
         }

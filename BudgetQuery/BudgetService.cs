@@ -15,13 +15,19 @@ namespace BudgetQuery
         }
         public double Query(DateTime start, DateTime end)
         {
+            if (start > end)
+            {
+                return 0;
+            }
+
             var budgets = _repo.GetAll();
+            var startMonth = start.ToString("yyyyMM");
 
             if (budgets.Any())
             {
-                return budgets.First().Amount;
+                return budgets.FirstOrDefault(t => t.YearMonth == startMonth)?.Amount ?? 0;
             }
-                
+
             return 0;
         }
     }
