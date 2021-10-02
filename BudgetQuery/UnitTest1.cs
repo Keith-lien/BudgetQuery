@@ -29,16 +29,26 @@ namespace BudgetQuery
 
     //> 先讓測試案例可以被整除，先不處理小數
 
-    //> 考慮閏年 DateTime.IsLeapYear(Int32) https://docs.microsoft.com/zh-tw/dotnet/api/system.datetime.isleapyear?view=net-5.0
     //> 檢查日期區間有效範圍 (確保 end 不會早於 start), 無效 return 0
     //> 查不到資料 return 0
-    //> 一個月有幾天 DateTime.DaysInMonth
-    //> 是不是月底 month.01 + 1 month - 1 day
+
+    //[code:c#]
+
+    //[/code]
 
     //2. Naming
     //Class:  BudgetService
     //Method:
     //double Query(DateTime Start, DateTime End)
+
+    #endregion MyRegion
+
+    #region MyRegion
+
+    //> 考慮閏年 DateTime.IsLeapYear(Int32) https://docs.microsoft.com/zh-tw/dotnet/api/system.datetime.isleapyear?view=net-5.0
+    //> 一個月有幾天 DateTime.DaysInMonth
+    //> 是不是月底 month.01 + 1 month - 1 day
+    // 算 start end 之間 有幾天 new TimeSpan(date1.Ticks - date2.Ticks).TotalDays
 
     #endregion MyRegion
 
