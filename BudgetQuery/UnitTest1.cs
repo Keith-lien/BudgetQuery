@@ -1,8 +1,47 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace BudgetQuery
 {
+    #region MyRegion
+
+    //組別 04
+
+    //1730: finish => repository
+
+    //> test case define
+
+    //> code review
+
+    //查詢預算
+    //1. 特定區間 可用預算的功能
+    //> 資料欄位
+    //table - budgets
+    //col
+    //YearMonth: char 6, ( 202104
+    //Amount	 : int (> 0
+    //=> 這一個月有多少預算可以用
+    //資料可能有缺、可能有資料卻為 0、不連續月份
+
+    //IBudgetRepo
+    //+getAll() :List<Budget>(fake by NSubsutitue) 不做 filter ，拉出所有資訊
+
+    //eg. 5/21 ~6/20 => 按比例切  5/21~5/31 共 11 天 所以是 11/31
+
+    //> 先讓測試案例可以被整除，先不處理小數
+
+    //> 考慮閏年 DateTime.IsLeapYear(Int32) https://docs.microsoft.com/zh-tw/dotnet/api/system.datetime.isleapyear?view=net-5.0
+    //> 檢查日期區間有效範圍 (確保 end 不會早於 start), 無效 return 0
+    //> 查不到資料 return 0
+    //> 一個月有幾天 DateTime.DaysInMonth
+    //> 是不是月底 month.01 + 1 month - 1 day
+
+    //2. Naming
+    //Class:  BudgetService
+    //Method:
+    //double Query(DateTime Start, DateTime End)
+
+    #endregion MyRegion
+
     [TestClass]
     public class UnitTest1
     {
