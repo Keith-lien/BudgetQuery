@@ -50,7 +50,7 @@ namespace BudgetQuery
 
     //> 考慮閏年 DateTime.IsLeapYear(Int32) https://docs.microsoft.com/zh-tw/dotnet/api/system.datetime.isleapyear?view=net-5.0
     //> 一個月有幾天 DateTime.DaysInMonth
-    //> 是不是月底 month.01 + 1 month - 1 day
+    //> 是不是月底 month.01 + 1 month - 1 day e.g. 2021-03-03 => new DateTime(2021,3,1).addmonth(1).addDay(-1)
     // 算 start end 之間 有幾天 new TimeSpan(date1.Ticks - date2.Ticks).TotalDays
 
     #endregion MyRegion
@@ -99,6 +99,14 @@ namespace BudgetQuery
             GivenReport(new Budget { YearMonth = "202101", Amount = 310 });
             var actual = _budgetService.Query(new DateTime(2021, 1, 1), new DateTime(2021, 1, 31));
             Assert.AreEqual(310, actual);
+        }
+
+        [Test]
+        public void QueryTwoDaysInOneMonth()
+        {
+            GivenReport(new Budget { YearMonth = "202101", Amount = 310 });
+            var actual = _budgetService.Query(new DateTime(2021, 1, 1), new DateTime(2021, 1, 2));
+            Assert.AreEqual(20, actual);
         }
 
         private void GivenReport(params Budget[] budgets)

@@ -13,15 +13,27 @@ namespace BudgetQuery
         {
             _repo = budgetRepo;
         }
+
         public double Query(DateTime start, DateTime end)
         {
             if (start > end)
             {
                 return 0;
             }
-
             var budgets = _repo.GetAll();
             var startMonth = start.ToString("yyyyMM");
+
+            var daysInMonth = DateTime.DaysInMonth(end.Year, end.Month);
+            if (start.Day != 1 || end.Day != daysInMonth)
+            {
+                if (budgets != null)
+                {
+                    var amount = budgets.FirstOrDefault(t => t.YearMonth == startMonth)?.Amount ?? 0;
+                    var days = end.Day - start.Day +1;
+                    return (amount / daysInMonth) * days;
+                }
+            }
+            
 
             if (budgets.Any())
             {
