@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,10 +7,16 @@ namespace BudgetQuery
 {
     public class BudgetService
     {
+        private readonly IBudgetRepo _repo;
+
+        public BudgetService(IBudgetRepo budgetRepo)
+        {
+            _repo = budgetRepo;
+        }
         public double Query(DateTime start, DateTime end)
         {
-            IBudgetRepo repo = new BudgetRepo();
-            var budgets = repo.GetAll();
+            
+            var budgets = _repo.GetAll();
             if (false == budgets.Any())
             {
                 return 0;

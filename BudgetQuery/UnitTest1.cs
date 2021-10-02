@@ -61,13 +61,12 @@ namespace BudgetQuery
         [SetUp]
         public void Init()
         {
-            _budgetService = new BudgetService();
+            _budgetService = new BudgetService(new BudgetRepo());
         }
 
         [Test]
         public void Invalid_Period()
         {
-            
             var actual = _budgetService.Query(new DateTime(2021, 1, 2), new DateTime(2021, 1, 1));
             Assert.AreEqual(0, actual);
         }
